@@ -11,7 +11,11 @@ func Example() {
 
 	foo, ok := totallynotaglobal.Get("foo")
 	if ok {
-		fmt.Println(foo)
+		fmt.Print(foo)
 	}
-	// output: bar
+
+	totallynotaglobal.WithTotallyNotAGlobalValue("foo", func(notAGlobalValue interface{}) {
+		fmt.Println(notAGlobalValue)
+	})
+	// output: barbar
 }
