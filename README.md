@@ -19,13 +19,19 @@ import (
 
 func main() {
 	totallynotaglobal.Set("foo", "bar")
+	totallynotaglobal.SetOnce("baz", func() interface{} {
+		return "qux"
+	})
+	totallynotaglobal.SetOnce("baz", func() interface{} {
+		return "not qux"
+	})
 
 	foo, ok := totallynotaglobal.Get("foo")
 	if ok {
 		fmt.Print(foo)
 	}
 
-	totallynotaglobal.WithTotallyNotAGlobalValue("foo", func(notAGlobalValue interface{}) {
+	totallynotaglobal.WithTotallyNotAGlobalValue("baz", func(notAGlobalValue interface{}) {
 		fmt.Println(notAGlobalValue)
 	})
 }

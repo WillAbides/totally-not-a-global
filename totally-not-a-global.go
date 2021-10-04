@@ -16,6 +16,17 @@ func initialize() {
 	)
 }
 
+// SetOnce sets name's value to the resuls of fn if there is no existing value called name.
+func SetOnce(name string, fn func() interface{}) {
+	initialize()
+	lock.Lock()
+	defer lock.Unlock()
+	if _, ok := notGlobals[name]; ok {
+		return
+	}
+	notGlobals[name] = fn()
+}
+
 // Set a value. It's ok, it's totally not a global, at least not in your package.
 func Set(name string, value interface{}) {
 	initialize()
