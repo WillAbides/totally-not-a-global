@@ -35,13 +35,22 @@ func Set(name string, value interface{}) {
 	lock.Unlock()
 }
 
-// Get returns a value and whether that value has been Set.
-func Get(name string) (value interface{}, ok bool) {
+// Lookup returns a value and whether that value has been Set.
+func Lookup(name string) (value interface{}, ok bool) {
 	initialize()
 	lock.RLock()
 	value, ok = notGlobals[name]
 	lock.RUnlock()
 	return value, ok
+}
+
+// Get returns a value
+func Get(name string) interface{} {
+	initialize()
+	lock.RLock()
+	value := notGlobals[name]
+	lock.RUnlock()
+	return value
 }
 
 // WithTotallyNotAGlobalValue runs fn with the named value if a value named name has been set

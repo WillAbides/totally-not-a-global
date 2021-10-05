@@ -15,7 +15,7 @@ func Example() {
 		return "not qux"
 	})
 
-	foo, ok := totallynotaglobal.Get("foo")
+	foo, ok := totallynotaglobal.Lookup("foo")
 	if ok {
 		fmt.Print(foo)
 	}
